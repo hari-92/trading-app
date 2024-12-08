@@ -46,27 +46,29 @@ export const LoginForm: FC<LoginFormProps> = ({
                 </h1>
 
                 <div className="space-y-6">
-                    {/* Email Input */}
-                    <div>
-                        <label className="block text-sm text-gray-400 mb-2">
-                            Email/Số điện thoại
-                        </label>
-                        <input
-                            type="text"
-                            value={email}
-                            onChange={handleEmailChange}
-                            placeholder="Email/Số điện thoại (không có mã quốc gia)"
-                            className="w-full bg-[#1E2329] text-white px-4 py-3 rounded focus:outline-none focus:ring-1 focus:ring-yellow-500"
-                        />
-                    </div>
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        {/* Email Input */}
+                        <div>
+                            <label className="block text-sm text-gray-400 mb-2">
+                                Email/Số điện thoại
+                            </label>
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={handleEmailChange}
+                                placeholder="Email/Số điện thoại (không có mã quốc gia)"
+                                className="w-full bg-[#1E2329] text-white px-4 py-3 rounded focus:outline-none focus:ring-1 focus:ring-yellow-500"
+                            />
+                        </div>
 
-                    {/* Continue Button */}
-                    <button
-                        type="submit"
-                        className="w-full bg-[#FCD535] text-black py-3 rounded font-medium hover:bg-[#F0B90B] transition-colors"
-                    >
-                        Tiếp theo
-                    </button>
+                        {/* Continue Button */}
+                        <button
+                            type="submit"
+                            className="w-full bg-[#FCD535] text-black py-3 rounded font-medium hover:bg-[#F0B90B] transition-colors"
+                        >
+                            Tiếp theo
+                        </button>
+                    </form>
 
                     {/* Divider */}
                     <div className="relative">

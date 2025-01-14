@@ -6,18 +6,19 @@ import {FaApple} from "react-icons/fa"
 import Image from 'next/image'
 import Link from "next/link";
 
-interface LoginFormProps {
+interface RegisterFormProps {
     onSubmit?: (email: string) => void
     onGoogleSignIn?: () => void
     onAppleSignIn?: () => void
 }
 
-export const LoginForm: FC<LoginFormProps> = ({
+export const RegisterForm: FC<RegisterFormProps> = ({
                                                   onSubmit,
                                                   onGoogleSignIn,
                                                   onAppleSignIn
                                               }) => {
     const [email, setEmail] = useState<string>('')
+    const [agreed, setAgreed] = useState<boolean>(false)
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
@@ -26,6 +27,10 @@ export const LoginForm: FC<LoginFormProps> = ({
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)
+    }
+
+    const handleAgreedChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        setAgreed(e.target.checked)
     }
 
     return (
@@ -43,7 +48,7 @@ export const LoginForm: FC<LoginFormProps> = ({
             {/* Form Container */}
             <div className="max-w-md mx-auto">
                 <h1 className="text-2xl font-bold text-white mb-6">
-                    Đăng nhập
+                Chào mừng bạn đến với Binance
                 </h1>
 
                 <div className="space-y-6">
@@ -60,6 +65,22 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 placeholder="Email/Số điện thoại (không có mã quốc gia)"
                                 className="w-full bg-[#1E2329] text-white px-4 py-3 rounded focus:outline-none focus:ring-1 focus:ring-yellow-500"
                             />
+                        </div>
+
+                        <div className="flex items-start gap-2 mb-6">
+                            <input
+                                type="checkbox"
+                                checked={agreed}
+                                onChange={handleAgreedChange}
+                                className="mt-1"
+                            />
+                            <label className="block text-sm text-gray-400 mb-2">
+                                Thông qua việc tạo một tài khoản, tôi đồng ý với 
+                                <span> Điều khoản dịch vụ </span>
+                                Và
+                                <span> Chính sách quyền riêng tư </span>
+                                của Binance.
+                            </label>
                         </div>
 
                         {/* Continue Button */}
@@ -105,10 +126,10 @@ export const LoginForm: FC<LoginFormProps> = ({
                     {/* Register Link */}
                     <div className="text-center">
                         <Link
-                            href="/register"
+                            href="/login"
                             className="text-[#F0B90B] hover:text-yellow-400"
                         >
-                            Tạo tài khoản Binance
+                            Đăng nhập
                         </Link>
                     </div>
                 </div>
@@ -117,4 +138,4 @@ export const LoginForm: FC<LoginFormProps> = ({
     )
 }
 
-export default LoginForm
+export default RegisterForm

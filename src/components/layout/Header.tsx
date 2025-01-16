@@ -1,8 +1,14 @@
 'use client'
 import Image from 'next/image'
+import {useSession} from "next-auth/react";
+import {usePathname} from "next/navigation";
 
 const Header = () => {
-    return (
+    const {data: session} = useSession()
+    const pathName = usePathname()
+    const isGamePage = pathName.startsWith('/game')
+
+    return  session && !isGamePage && (
         <header className="flex justify-between items-center p-4 bg-[#1E2329]">
             <div className="flex items-center">
                 <Image src="/binance-logo.svg" alt="Binance" width={120} height={32}/>

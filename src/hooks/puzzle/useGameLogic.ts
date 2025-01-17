@@ -1,13 +1,19 @@
 'use client'
 import { useState } from 'react'
 
-const useGameLogic = () => {
-    const [board, setBoard] = useState<number[][]>(Array(4).fill(0).map(() => Array(4).fill(0)))
+const useGameLogic = (size: number = 4) => {
+    const [board, setBoard] = useState<number[][]>(
+        Array(size)
+            .fill(0)
+            .map(() => Array(size).fill(0))
+    )
     const [score, setScore] = useState<number>(0)
     const [gameOver, setGameOver] = useState<boolean>(false)
 
     const initGame = () => {
-        const newBoard = Array(4).fill(0).map(() => Array(4).fill(0))
+        const newBoard = Array(size)
+            .fill(0)
+            .map(() => Array(size).fill(0))
         addNewTile(newBoard)
         addNewTile(newBoard)
         setBoard(newBoard)
@@ -17,8 +23,8 @@ const useGameLogic = () => {
 
     const addNewTile = (currentBoard: number[][]) => {
         const emptyCells = []
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
                 if (currentBoard[i][j] === 0) {
                     emptyCells.push({ x: i, y: j })
                 }
@@ -36,13 +42,13 @@ const useGameLogic = () => {
         // Loại bỏ số 0
         const nonZero = line.filter(cell => cell !== 0)
         // Thêm số 0 vào cuối
-        const zeros = Array(4 - nonZero.length).fill(0)
+        const zeros = Array(size - nonZero.length).fill(0)
         return nonZero.concat(zeros)
     }
 
     // Helper function để merge các số giống nhau
     const merge = (line: number[]): number[] => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < size-1; i++) {
             if (line[i] !== 0 && line[i] === line[i + 1]) {
                 line[i] = line[i] * 2
                 line[i + 1] = 0
@@ -129,15 +135,15 @@ const useGameLogic = () => {
     // Kiểm tra game over
     const checkGameOver = (currentBoard: number[][]) => {
         // Kiểm tra còn ô trống
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
                 if (currentBoard[i][j] === 0) return
             }
         }
 
         // Kiểm tra có thể merge không
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size-1; j++) {
                 if (currentBoard[i][j] === currentBoard[i][j + 1]) return
                 if (currentBoard[j][i] === currentBoard[j + 1][i]) return
             }

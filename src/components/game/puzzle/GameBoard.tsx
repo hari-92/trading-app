@@ -3,6 +3,28 @@ interface GameBoardProps {
 }
 
 export const GameBoard = ({board}: GameBoardProps) => {
+    const size = board.length;
+
+    const getTileSize = () => {
+        const sizes: { [key: number]: string } = {
+            4: 'w-20 h-20',
+            5: 'w-16 h-16',
+            6: 'w-14 h-14',
+            7: 'w-12 h-12',
+            8: 'w-11 h-11',
+            9: 'w-10 h-10',
+            10: 'w-9 h-9'
+        };
+        return sizes[size] || 'w-8 h-8';
+    }
+
+    const getFontSize = (value: number): string => {
+        if (size <= 4) return value >= 1000 ? 'text-2xl' : 'text-3xl';
+        if (size <= 6) return value >= 1000 ? 'text-xl' : 'text-2xl';
+        if (size <= 8) return value >= 1000 ? 'text-lg' : 'text-xl';
+        return value >= 1000 ? 'text-sm' : 'text-base';
+    }
+
     const getTileColor = (value: number): string => {
         const colors: {[key: number]: string} = {
             2: 'bg-gray-200',
@@ -24,19 +46,18 @@ export const GameBoard = ({board}: GameBoardProps) => {
         return value <= 4 ? 'text-gray-700' : 'text-white'
     }
 
-    const getTextSize = (value: number): string => {
-        return value >= 1000 ? 'text-2xl' : 'text-3xl'
-    }
-
     return (
         <div className="bg-gray-300 p-4 rounded-lg">
-            <div className="grid grid-cols-4 gap-4">
+            <div className={`grid gap-2`}
+                 style={{
+                     gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
+                 }}>
                 {board.map((row, i) =>
                     row.map((cell, j) => (
                         <div
                             key={`${i}-${j}`}
                             className={`
-                                w-20 h-20 
+                                ${getTileSize()}
                                 flex items-center justify-center 
                                 rounded-lg
                                 ${getTileColor(cell)}
@@ -46,7 +67,7 @@ export const GameBoard = ({board}: GameBoardProps) => {
                                 ${cell === 0 ? 'bg-gray-400' : ''}
                             `}
                         >
-                            <span className={getTextSize(cell)}>
+                            <span className={getFontSize(cell)}>
                                 {cell !== 0 ? cell : ''}
                             </span>
                         </div>

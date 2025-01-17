@@ -5,7 +5,11 @@ import GameHeader from "@/components/game/puzzle/GameHeader";
 import {GameBoard} from "@/components/game/puzzle/GameBoard";
 import GameControls from "@/components/game/puzzle/GameControls";
 
-export const PlayGame = () => {
+interface PlayGameProps {
+    size?: number;
+}
+
+export const PlayGame = ({ size = 4 }: PlayGameProps) => {
     const {
         board,
         score,
@@ -15,7 +19,11 @@ export const PlayGame = () => {
         moveDown,
         moveLeft,
         moveRight
-    } = useGameLogic()
+    } = useGameLogic(size)
+
+    useEffect(() => {
+        initGame()
+    }, [size]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
